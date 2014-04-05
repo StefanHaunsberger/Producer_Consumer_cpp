@@ -17,8 +17,13 @@ private:
 	CondVar m_cond_var_not_empty;
 	CondVar m_cond_var_not_full;
 	SharedBoolean m_keep_working;				// Signals when producer thread has finished
+	T fail;
 
 public:
+
+	// Set Fail element to be returned when the current key or supplied key are not defined
+	inline void Null(T f) {fail=f;}
+	inline void Fail(T f) {fail=f;}
 
 	Pool(const int max_size = 4) :
 			m_max_size(max_size),
@@ -71,9 +76,8 @@ public:
 		while (m_data.size() <= 0 && m_keep_working.keepWorking()) {
 			m_cond_var_not_empty.wait();
 		}
-		T item;
 		if (m_data.size() > 0) {
-			item = m_data.front();
+			T item = m_data.front();
 			m_data.pop();
 			m_cond_var_not_full.signal();
 			m_mutex.unlock();
@@ -82,7 +86,7 @@ public:
 			// Thread received signal for termination
 			// (no items in queue and producer thread has finished)
 			m_mutex.unlock();
-			return item;
+			return fail;
 		}
 	}
 

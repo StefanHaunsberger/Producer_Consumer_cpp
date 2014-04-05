@@ -29,6 +29,10 @@ int main() {
 	Pool<pair<string*, int> > shared_queue;
 	Mutex mutex;
 
+	// Set value to signal NULL
+//	pair<string*, int> null_element(NULL, 0);
+	shared_queue.Null(pair<string*, int> (NULL, 999));
+
 	////////////////////////////////////////////////////////////////////////
 	// Initialize hit items
 	printf("Initialize hit-vector\n");

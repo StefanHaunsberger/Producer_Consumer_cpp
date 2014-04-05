@@ -37,14 +37,15 @@ void * Consumer::run() {
 		m_printout_mutex.unlock();
 		pair<string*, int> item = (pair<string*, int> ) m_shared_queue.pop();
 		// Make sure that all elements of the queue are processed
-		if (m_shared_queue.keepWorking() || item.first) {
+//		if (m_shared_queue.keepWorking() || item.first) {
+		if (item.first) {
 			*(item.first) += " AFTER";
 			m_printout_mutex.lock();
 			printLock1(i, item);
 			m_printout_mutex.unlock();
 //			sleep(1);
 		} else {
-			printf("Consumer thread: %i", m_thread_id);
+			printf("Consumer thread: %i, return value: %i", m_thread_id, item.second); // test if NULL-element works :)
 			printf("\t No more items to process --> finish\n");
 			break;
 		}
