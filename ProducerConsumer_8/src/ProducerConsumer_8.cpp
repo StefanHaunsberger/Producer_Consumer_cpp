@@ -7,7 +7,6 @@
 //								Inclusive thread termination
 //============================================================================
 
-#include "Pool.h"
 #include <iostream>		// cout
 #include <string>			// string
 #include <utility>		// pair
@@ -16,6 +15,7 @@
 #include "Mutex.h"
 #include "Producer.h"
 #include <stdio.h>
+#include "WorkerQueue.h"
 
 using namespace std;
 
@@ -26,7 +26,7 @@ int main() {
 	int num_threads = 2;
 
 	vector<string> hit_queue;
-	Pool<pair<string*, int> > shared_queue;
+	WorkerQueue<pair<string*, int> > shared_queue;
 	Mutex mutex;
 
 	// Set value to signal NULL

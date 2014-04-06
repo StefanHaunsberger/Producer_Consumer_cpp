@@ -11,7 +11,7 @@
 
 using namespace std;
 
-Consumer::Consumer(Pool<pair<string*, int> > & queue, const int thread_id, Mutex & mutex) :
+Consumer::Consumer(WorkerQueue<pair<string*, int> > & queue, const int thread_id, Mutex & mutex) :
 	m_shared_queue(queue),
 	m_thread_id(thread_id),
 	m_printout_mutex(mutex) {

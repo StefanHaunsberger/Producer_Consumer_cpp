@@ -8,7 +8,7 @@
 #include "Producer.h"
 #include <stdio.h>			// printf
 
-Producer::Producer(std::vector<string>& hit_queue, Pool<pair<string*, int> >& shared_queue, const int thread_id, Mutex& mutex) :
+Producer::Producer(std::vector<string>& hit_queue, WorkerQueue<pair<string*, int> >& shared_queue, const int thread_id, Mutex& mutex) :
 	m_hit_queue(hit_queue),
 	m_shared_queue(shared_queue),
 	m_thread_id(thread_id),

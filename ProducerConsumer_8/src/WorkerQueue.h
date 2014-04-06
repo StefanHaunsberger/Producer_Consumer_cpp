@@ -1,5 +1,15 @@
-#ifndef __POOL_H__
-#define __POOL_H__
+/*
+ * WorkerQueue.h
+ *
+ *  Created on: Mar 31, 2014
+ *      Author: Stefan Haunsberger
+ *
+ *      Copyright (c) 2014 -. All rights reserved.
+ */
+
+
+#ifndef __WORKERQUEUE_H__
+#define __WORKERQUEUE_H__
 
 #include "Mutex.h"
 #include <stdio.h>
@@ -8,7 +18,7 @@
 #include "CondVar.h"
 #include "SharedBoolean.h"
 
-template<class T> class Pool {
+template<class T> class WorkerQueue {
 
 private:
 	std::queue<T> m_data;
@@ -25,14 +35,14 @@ public:
 	inline void Null(T f) {fail=f;}
 	inline void Fail(T f) {fail=f;}
 
-	Pool(const int max_size = 4) :
+	WorkerQueue(const int max_size = 4) :
 			m_max_size(max_size),
 			m_cond_var_not_empty(m_mutex),
 			m_cond_var_not_full(m_mutex) {
 
 	}
 
-	~Pool() {
+	~WorkerQueue() {
 		m_mutex.lock();
 		while (m_data.size())
 			m_data.pop();
